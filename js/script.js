@@ -5,6 +5,9 @@ const jobField = document.getElementById("title");
 const shirtColor = document.getElementById("color");
 const shirtColorOption = document.querySelectorAll("#color option");
 const shirtDesign = document.getElementById("design");
+const activityFieldset = document.getElementById("activities");
+const activityTotal = document.getElementById("activities-cost");
+let total = 0;
 
 //Focus name field on page load
 nameField.focus();
@@ -48,6 +51,14 @@ shirtDesign.addEventListener("change", e=> {
         shirtColor.setAttribute('disabled', '');
     }
 })
+
+//Activities
+
+activityFieldset.addEventListener("change", e=> {
+    console.log(e.target);
+})
+
+
 
 
 
