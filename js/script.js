@@ -19,6 +19,7 @@ const ccYear = document.getElementById("exp-year");
 const ccNum = document.getElementById("cc-num");
 const ccZip = document.getElementById("zip");
 const ccCvv = document.getElementById("cvv");
+const ccDate = document.getElementById("exp-month");
 
 //Focus name field on page load
 nameField.focus();
@@ -133,12 +134,19 @@ function validateEmail() {
     return false;
 }
 
-// function validateActivities() {
-//     if () {
-
-//     }
-//     return true;
-// }
+function validateActivities() {
+    let arr = [];
+    const activityBox = document.getElementById("activities");
+   
+   for (i=0;i<checkBoxes.length;i++) {
+    arr += checkBoxes[i].checked;
+   }
+    if (arr.includes(true)) {
+        return true;
+    }    
+    activityBox.classList.add("not-valid");   
+    return false;
+}
 
 function validatePayment() {
     let arr = [];
@@ -152,25 +160,30 @@ function validatePayment() {
     const ccCvvValue = ccCvv.value;
     const ccCvvRegEx = /^[0-9]{3}$/;
     arr += ccCvvRegEx.test(ccCvvValue);
+    arr += ccDate.value === "Select Date";
 
     if(paymentOption.value === "credit-card" || paymentOption.value === "select method") {
     
-    if(!ccNumRegex.test(ccNumValue)) {
-        ccNum.classList.add("error")
-    } 
-    if (!ccZipRegEx.test(ccZipValue)){
-        ccZip.classList.add("error");
-    } 
-    if(ccYear.value === "Select Year") {
-        ccYear.classList.add("error");
+        if(!ccNumRegex.test(ccNumValue)) {
+            ccNum.classList.add("error")
+        } 
+        if (!ccZipRegEx.test(ccZipValue)){
+            ccZip.classList.add("error");
+        } 
+        if(ccYear.value === "Select Year") {
+            ccYear.classList.add("error");
+        }
+        if(!ccCvvRegEx.test(ccCvvValue)) {
+            ccCvv.classList.add("error");
+        }
+        if(ccDate.value === "Select Date") {
+            ccDate.classList.add("error");
+        }
+        if(arr.includes(false)) {
+            return false;
+        }
+
     }
-    if(!ccCvvRegEx.test(ccCvvValue)) {
-        ccCvv.classList.add("error");
-    }
-    if(arr.includes(false)) {
-        return false;
-    }
-}
     return true;
 
 }
@@ -181,7 +194,7 @@ form.addEventListener("submit",e=> {
     let arr = [];
     arr += validateName();
     arr += validateEmail();
-    // arr += ;
+    arr += validateActivities();
     arr += validatePayment();
     if(arr.includes(false)) {
         e.preventDefault();
