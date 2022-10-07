@@ -8,6 +8,7 @@ const shirtDesign = document.getElementById("design");
 const activityFieldset = document.getElementById("activities");
 const activityTotal = document.getElementById("activities-cost");
 let total = 0;
+const checkBoxes = document.querySelectorAll('input[type=checkbox]');
 
 //Focus name field on page load
 nameField.focus();
@@ -55,7 +56,27 @@ shirtDesign.addEventListener("change", e=> {
 //Activities
 
 activityFieldset.addEventListener("change", e=> {
-    console.log(e.target);
+    const checkBoxName =e.target.getAttribute("name");
+    const checkBoxDate = e.target.getAttribute("data-day-and-time");
+    const cost = e.target.getAttribute("data-cost");
+    const checked = e.target.checked;
+    if (checked === true) {
+        for (i=0;i<checkBoxes.length;i++) {
+            if (checkBoxes[i].getAttribute("name") !== checkBoxName && checkBoxDate === checkBoxes[i].getAttribute("data-day-and-time")) {
+                checkBoxes[i].setAttribute("disabled", "")
+            }
+        }
+    total += (cost*1);
+    activityTotal.innerHTML = `Total: $${total}`;
+} else if(checked === false)  {
+    for (i=0;i<checkBoxes.length;i++) {
+        if (checkBoxes[i].getAttribute("name") !== checkBoxName && checkBoxDate === checkBoxes[i].getAttribute("data-day-and-time")) {
+            checkBoxes[i].removeAttribute("disabled", "")
+        }
+    }
+    total -= (cost*1);
+    activityTotal.innerHTML = `Total: $${total}`;
+}
 })
 
 
