@@ -53,7 +53,7 @@ shirtDesign.addEventListener("change", e=> {
     }
 })
 
-//Activities
+//Activity checkbox functionality
 
 activityFieldset.addEventListener("change", e=> {
     const checkBoxName =e.target.getAttribute("name");
