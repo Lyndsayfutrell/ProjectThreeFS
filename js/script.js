@@ -269,6 +269,9 @@ emailField.addEventListener("keyup",e=>{
     validateEmail();
 })
 
+//Select CC payment on page load
+function paymentCC() {
+    paymentOption.selectedIndex = 1;
+}
 
-
-
+paymentCC();
