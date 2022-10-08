@@ -15,11 +15,9 @@ const creditPayment = document.getElementById("credit-card");
 const bitcoinPayment = document.getElementById("bitcoin");
 const paypalPayment = document.getElementById("paypal");
 const form = document.querySelector("form");
-const ccYear = document.getElementById("exp-year");
 const ccNum = document.getElementById("cc-num");
 const ccZip = document.getElementById("zip");
 const ccCvv = document.getElementById("cvv");
-const ccDate = document.getElementById("exp-month");
 
 
 //Focus name field on page load
@@ -125,8 +123,15 @@ paymentOption.addEventListener("change", e=> {
 function validateName() {
     if(nameField.value === "") {
         nameField.classList.add("error");
+        nameField.parentElement.classList.remove("valid");
+        nameField.parentElement.classList.add("not-valid");
+        nameField.parentElement.lastElementChild.style.display = "block";
         return false;
     }
+    nameField.classList.remove("error");
+    nameField.parentElement.classList.remove("not-valid");
+    nameField.parentElement.classList.add("valid");
+    nameField.parentElement.lastElementChild.style.display = "none";
     return true;
 }
 
@@ -135,9 +140,16 @@ function validateEmail() {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const emailTest = emailRegex.test(value);
     if(emailTest) {
+        emailField.classList.remove("error");
+        emailField.parentElement.classList.remove("not-valid");
+        emailField.parentElement.classList.add("valid");
+        emailField.parentElement.lastElementChild.style.display = "none";
         return true;
     }
     emailField.classList.add("error");
+    emailField.parentElement.classList.remove("valid");
+    emailField.parentElement.classList.add("not-valid");
+    emailField.parentElement.lastElementChild.style.display = "block";
     return false;
 }
 
@@ -149,42 +161,63 @@ function validateActivities() {
     arr += checkBoxes[i].checked;
    }
     if (arr.includes(true)) {
+        activityBox.classList.remove("not-valid");
+        activityBox.classList.add("valid"); 
+        activityBox.lastElementChild.style.display = "none";    
         return true;
     }    
-    activityBox.classList.add("not-valid");   
+    activityBox.classList.add("not-valid"); 
+    activityBox.classList.remove("valid");
+    activityBox.lastElementChild.style.display = "block";  
     return false;
 }
 
 function validatePayment() {
     let arr = [];
     const ccNumValue = ccNum.value;
-    const ccNumRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
+    const ccNumRegex = /^[0-9]{13,16}$/;
     arr += ccNumRegex.test(ccNumValue);
     const ccZipValue = ccZip.value;
     const ccZipRegEx = /^[0-9]{5}$/;
     arr += ccZipRegEx.test(ccZipValue);
-    arr += ccYear.value === "Select Year";
     const ccCvvValue = ccCvv.value;
     const ccCvvRegEx = /^[0-9]{3}$/;
     arr += ccCvvRegEx.test(ccCvvValue);
-    arr += ccDate.value === "Select Date";
 
     if(paymentOption.value === "credit-card" || paymentOption.value === "select method") {
     
         if(!ccNumRegex.test(ccNumValue)) {
+            ccNum.parentElement.classList.add("not-valid");
+            ccNum.parentElement.classList.remove("valid");
+            ccNum.parentElement.lastElementChild.style.display = "block"; 
             ccNum.classList.add("error")
-        } 
+        } else {
+            ccNum.parentElement.classList.add("valid");
+            ccNum.parentElement.classList.remove("not-valid");
+            ccNum.parentElement.lastElementChild.style.display = "none"; 
+            ccNum.classList.remove("error")
+        }
         if (!ccZipRegEx.test(ccZipValue)){
+            ccZip.parentElement.classList.add("not-valid");
+            ccZip.parentElement.classList.remove("valid");
+            ccZip.parentElement.lastElementChild.style.display = "block"; 
             ccZip.classList.add("error");
-        } 
-        if(ccYear.value === "Select Year") {
-            ccYear.classList.add("error");
+        } else {
+            ccZip.parentElement.classList.add("valid");
+            ccZip.parentElement.classList.remove("not-valid");
+            ccZip.parentElement.lastElementChild.style.display = "none"; 
+            ccZip.classList.remove("error");
         }
         if(!ccCvvRegEx.test(ccCvvValue)) {
+            ccCvv.parentElement.classList.add("not-valid");
+            ccCvv.parentElement.classList.remove("valid");
+            ccCvv.parentElement.lastElementChild.style.display = "block"; 
             ccCvv.classList.add("error");
-        }
-        if(ccDate.value === "Select Date") {
-            ccDate.classList.add("error");
+        } else {
+            ccCvv.parentElement.classList.add("valid");
+            ccCvv.parentElement.classList.remove("not-valid");
+            ccCvv.parentElement.lastElementChild.style.display = "none"; 
+            ccCvv.classList.remove("error");
         }
         if(arr.includes(false)) {
             return false;
