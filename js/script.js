@@ -138,7 +138,9 @@ function validateName() {
 function validateEmail() {
     const value = email.value;
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex2 = /.+\@/
     const emailTest = emailRegex.test(value);
+    const emailTest2 = emailRegex2.test(value);
     if(emailTest) {
         emailField.classList.remove("error");
         emailField.parentElement.classList.remove("not-valid");
@@ -146,10 +148,19 @@ function validateEmail() {
         emailField.parentElement.lastElementChild.style.display = "none";
         return true;
     }
+    if(emailTest2) {
+        emailField.classList.add("error");
+        emailField.parentElement.classList.remove("valid");
+        emailField.parentElement.classList.add("not-valid");
+        emailField.parentElement.lastElementChild.style.display = "block";
+        emailField.parentElement.lastElementChild.innerHTML = "Email must have valid domain address";
+        return false;
+    }
     emailField.classList.add("error");
     emailField.parentElement.classList.remove("valid");
     emailField.parentElement.classList.add("not-valid");
     emailField.parentElement.lastElementChild.style.display = "block";
+    emailField.parentElement.lastElementChild.innerHTML = "Email address must be formatted correctly";
     return false;
 }
 
@@ -252,6 +263,11 @@ function cbFocusEvent(e) {
 function cbBlurEvent(e) {
     e.parentNode.classList.remove("focus");
 }
+
+//Real time validation
+emailField.addEventListener("keyup",e=>{
+    validateEmail();
+})
 
 
 
