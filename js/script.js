@@ -21,6 +21,7 @@ const ccZip = document.getElementById("zip");
 const ccCvv = document.getElementById("cvv");
 const ccDate = document.getElementById("exp-month");
 
+
 //Focus name field on page load
 nameField.focus();
 
@@ -73,6 +74,12 @@ activityFieldset.addEventListener("change", e=> {
     const checked = e.target.checked;
     if (checked === true) {
         for (i=0;i<checkBoxes.length;i++) {
+            checkBoxes[i].addEventListener("focus", e=>{
+                cbFocusEvent(e.target);
+            })
+            checkBoxes[i].addEventListener("blur", e=> {
+                cbBlurEvent(e.target);
+            })
             if (checkBoxes[i].getAttribute("name") !== checkBoxName && checkBoxDate === checkBoxes[i].getAttribute("data-day-and-time")) {
                 checkBoxes[i].setAttribute("disabled", "")
             }
@@ -201,6 +208,17 @@ form.addEventListener("submit",e=> {
     }
    
 })
+
+
+//checkbox focus & blur functions
+
+function cbFocusEvent(e) {
+    e.parentNode.classList.add("focus");
+}
+
+function cbBlurEvent(e) {
+    e.parentNode.classList.remove("focus");
+}
 
 
 
