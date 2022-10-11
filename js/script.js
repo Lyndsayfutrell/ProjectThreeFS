@@ -41,6 +41,7 @@ shirtDesign.addEventListener("change", e=> {
     const value = e.target.value;
     if(value === "js puns") {
         shirtColor.removeAttribute('disabled', '');
+        shirtColor.selectedIndex = 1;
         shirtColorOption[0].setAttribute('hidden', '');
         shirtColorOption[1].removeAttribute('hidden', '');
         shirtColorOption[2].removeAttribute('hidden', '');
@@ -51,6 +52,7 @@ shirtDesign.addEventListener("change", e=> {
 
     } else if (value === "heart js") {
         shirtColor.removeAttribute('disabled', ''); 
+        shirtColor.selectedIndex = 4;
         shirtColorOption[0].setAttribute('hidden', '');
         shirtColorOption[1].setAttribute('hidden', '');
         shirtColorOption[2].setAttribute('hidden', '');
@@ -60,6 +62,7 @@ shirtDesign.addEventListener("change", e=> {
         shirtColorOption[6].removeAttribute('hidden', '');
     } else {
         shirtColor.setAttribute('disabled', '');
+        shirtColor.selectedIndex = 0;
     }
 })
 
@@ -71,6 +74,7 @@ activityFieldset.addEventListener("change", e=> {
     const cost = e.target.getAttribute("data-cost");
     const checked = e.target.checked;
     if (checked === true) {
+        cbFocusEvent(e.target);
         for (i=0;i<checkBoxes.length;i++) {
             checkBoxes[i].addEventListener("focus", e=>{
                 cbFocusEvent(e.target);
@@ -257,6 +261,7 @@ form.addEventListener("submit",e=> {
 //checkbox focus & blur functions
 
 function cbFocusEvent(e) {
+    console.log(e);
     e.parentNode.classList.add("focus");
 }
 
